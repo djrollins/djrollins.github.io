@@ -1,0 +1,14 @@
+# Site settings
+title: Daniel J. Rollins | Software Developer | Leeds, UK
+description: Personal website, portfolio and blog of Daniel J. Rollins
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://www.djrollins.com"
+
+owner:
+    name: Daniel J. Rollins
+    email: daniel@djrollins.com
+    
+# Build settings
+exclude: [jekyll-defaults] # exclude reference material
+include: [_pages] # directory of pages to clean up root
+markdown: kramdown

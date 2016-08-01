@@ -1,0 +1,89 @@
+@import "theme";
+
+header {
+    color: $header-color;
+	width: 100%;
+    background: $header-background-color;
+	text-align: center;
+	box-shadow: 0px 1px 3px $header-color;
+
+	.header-content {
+		display: block;
+		padding: 20px;
+		height: 360px;
+		margin: auto 0;
+	}
+
+	.initial {
+		opacity: 0.2;
+	}
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		display: inline-block;
+		margin: 0px 2.5px 0px 2.5px;
+	}
+	
+	ul.socials  {
+		padding-top: 16px;
+		a {
+			display: inline-block;
+			width: 36px;
+			height: 36px;
+			line-height: 36px;
+			border-radius: 100%;
+			background: $header-color;
+			color: $header-background-color;
+			&:hover {
+				opacity: 0.5;
+			}
+		}
+	}
+
+	.portrait {
+		width: 10em;
+		border-radius: 100%;
+		background: $header-color;
+	}
+}
+
+@media (min-width: 700px) {
+	header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: auto;
+		height: 100%;
+		width: $sidebar-width-small;
+		box-shadow: 1px 0px 3px $header-color;
+	}
+
+	.header-content {
+		padding: 10px;
+	}
+
+	main {
+		margin-left: $sidebar-width-small;
+		margin-top: 0;
+	}
+}
+
+@media (min-width: 900px) {
+	header {
+		width: $sidebar-width-large;
+	}
+
+	.header-content {
+		padding: 20px;
+	}
+
+	main {
+		margin-left: $sidebar-width-large;
+		margin-top: 0;
+	}
+}
