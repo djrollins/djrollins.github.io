@@ -1,0 +1,7 @@
+{% if page.navlinks %}
+<nav>
+{% for nav in site.data.navlinks[page.navlinks] %}
+	<a href="{{ nav[1].href }}">{{ nav[1].text }}</a>
+{% endfor %}
+</nav>
+{% endif %}

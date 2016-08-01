@@ -3,8 +3,8 @@
 ---
 @import
     "base",
-    "header";
-
+    "header",
+    "page";
 
 header  ul.socials a {
 	{% for social in site.socials %}

@@ -1,0 +1,284 @@
+html {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: #fff;
+    font-family: Hack, Monospace;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 80px;
+    transition: all 0.4s;
+}
+
+.navbar.collapsed {
+    height: 50px;
+    background-color: black;
+    border-bottom: 1px solid #777;
+}
+
+.navbar .section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+	height: 100%;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer; /* href is removed if javascript controls scroll */
+}
+
+.navbar-links {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-links li {
+    list-style-type: none;
+    margin-left: 10px;
+    padding: 15px;
+    transition: background 0.3s;
+}
+
+.navbar-links .current-page {
+    background-color: rgba(225, 225, 225, 0.3);
+    transition: background 0.3s;
+}
+
+.navbar-links a {
+    width: 100%;
+    height: 100%;
+}
+
+.intro {
+    background: url("../img/clarence-dock.jpg") no-repeat center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    box-shadow: 0px 0px 20px #111;
+}
+
+.intro-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.intro h1 {
+    font-size: 100px;
+    font-weight: 700;
+    text-shadow: 0px 0px 10px #000;
+}
+
+.intro p {
+    font-size: 20px;
+    text-shadow: 0px 0px 5px #000;
+}
+
+.aboutme {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    z-index: 1;
+}
+
+section:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("../img/cubes-blue.png") repeat;
+    z-index: -1;
+    opacity: 0.2;
+}
+
+
+.aboutme-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.aboutme-content .section {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.contact-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-picture {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    background: url("../img/profile-picture.png") center no-repeat;
+}
+
+.terminal {
+    font-size: 12px;
+    width: 1000;
+    height: 100%;
+    padding: 10px;
+    border: 1px solid #777;
+    text-align: left;
+    color: #EEE;
+    background-color: #000;
+    overflow: scroll;
+}
+
+.terminal .prompt {
+    color: #FFF;
+    font-weight: bold;
+}
+
+.terminal .caret {
+    animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+    to {
+        visibility: hidden;
+    }
+}
+
+.contact-content a.email {
+    color: #1983bc;
+    text-decoration: none;
+}
+
+.contact-content a.email:hover {
+    opacity: 0.7;
+}
+
+.socials {
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-top: 50px;
+}
+
+.socials li {
+    margin: 10px 10px 10px 10px;
+    height: 100px;
+    width: 100px;
+}
+
+.socials li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: 100px;
+}
+
+.socials li a:hover {
+    opacity: 0.7;
+}
+
+.twitter {
+    background: url("../img/twitter.png") center no-repeat;
+}
+
+.github {
+    background: url("../img/github.png") center no-repeat;
+}
+
+.linkedin {
+    background: url("../img/linkedin.png") center no-repeat;
+}
+
+.scroll-button {
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    cursor: pointer; /* we remove href if javascript is enabled */
+}
+
+.intro .scroll-button {
+    margin-bottom: 8px;
+}
+
+.scroll-down {
+    background: url("../img/down-arrow-white.png") center no-repeat;
+    background-size: 50px 50px;
+}
+
+/* try and use transform here */
+.scroll-up {
+    background: url("../img/up-arrow-white.png") center no-repeat;
+    background-size: 50px 50px;
+    margin-bottom: 20px;
+}
+
+.section {
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section.page h2 {
+    margin-top: 80px;
+}
+
+.credits {
+    text-align: right;
+    padding-right: 1.5em;
+    color: #FFF;
+    font-size: 12px;
+    text-shadow: 0px 0px 3px #000;
+}
+
+.credits a {
+    color: #FFF;
+}

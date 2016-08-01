@@ -1,0 +1,16 @@
+about:
+    about:
+        text: About
+        href: "/index.html"
+        local: true
+    cv:
+        text: "CV"
+        href: "/about/cv.html"
+        local: true
+    repo:
+        text: "Site repo"
+        href: "http://www.github.com/djrollins/djrollins.github.io"
+    oldsite:
+        text: "Old site"
+        href: "/assets/oldsite/index.html"
+        local: true
