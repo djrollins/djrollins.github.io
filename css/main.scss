@@ -5,3 +5,11 @@
     "base",
     "header";
 
+
+header  ul.socials a {
+	{% for social in site.socials %}
+		&.{{ social[0] }} {
+			background: {{ social[1].color }};
+		}
+	{% endfor %}
+}

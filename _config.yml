@@ -12,3 +12,25 @@ owner:
 exclude: [jekyll-defaults] # exclude reference material
 include: [_pages] # directory of pages to clean up root
 markdown: kramdown
+
+socials:
+    github:
+        fa: "fa-github"
+        color: "#333333"
+        url: "http://github.com/djrollins"
+    twitter:
+        fa: "fa-twitter"
+        color: "#4099FF"
+        url: "http://twitter.com/DanielJRollins"
+    stack-overflow:
+        fa: "fa-stack-overflow"
+        color: "#F48024"
+        url: "http://stackoverflow.com/users/2996594/djrollins"
+    linkedin:
+        fa: "fa-linkedin"
+        color: "#1A85BC"
+        url: "https://www.linkedin.com/in/djrollins"
+    email:
+        fa: "fa-envelope"
+        color: "#77CAC1"
+        url: "mailto:website@djrollins.com"
