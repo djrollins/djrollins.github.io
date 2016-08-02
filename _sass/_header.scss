@@ -5,7 +5,6 @@ header {
 	width: 100%;
     background: $header-background-color;
 	text-align: center;
-	box-shadow: 0px 1px 3px $header-color;
 	z-index: 1000;
 
 	.header-content {
@@ -60,7 +59,7 @@ header {
 		right: auto;
 		height: 100%;
 		width: 25%;
-		box-shadow: 1px 0px 3px $header-color;
+		border-right: 1px solid #C7C7C7;
 
 		ul.socials li {
 			margin: 0px;

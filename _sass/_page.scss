@@ -5,8 +5,9 @@ main.site-content {
     	width: 100%;
     	padding: 10px 0px;
     	text-align: center;
+		background: $header-background-color;
     	color: $accent-color;
-    	border-bottom: 1px solid #DDD;
+    	border-bottom: 1px solid #C7C7C7;
 
     	a {
     		display: inline-block;
