@@ -66,6 +66,7 @@ header {
 		}
 
 		.header-content {
+			margin-top: 35px;
 			padding: 10px;
 		}
 	}
@@ -74,7 +75,6 @@ header {
 @media (min-width: 1050px) {
 	header {
 		.header-content {
-			padding: 20px;
 		}
 		ul.socials li {
 			margin: 0px 2.5px 0px 2.5px;
