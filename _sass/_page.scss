@@ -20,14 +20,11 @@ main.site-content {
     		&:first-of-type {
 	    		border-left: 1px solid #C7C7C7;
     		}
-    		&:hover {
-    			text-decoration: underline;
-    		}
     	}
     }
 
 	section.page-content {
-		margin: 0 8% 2%;
+		padding: 2rem 8% 2%;
 	    overflow-x: hidden;
 	    overflow-y: hidden;
 	}
@@ -35,6 +32,11 @@ main.site-content {
 	h1 {
 		font-size: 2.4em;
 		font-weight: 300;
+		border-bottom: 1px solid #C7C7C7;
+	}
+
+	h2 {
+		border-bottom: 1px solid #F2F2F2;
 	}
 }
 

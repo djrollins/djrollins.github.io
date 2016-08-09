@@ -49,6 +49,15 @@ header {
 		border: 2px solid $accent-color;
 		background: $header-color;
 	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+		&:hover {
+			color: $accent-color;
+			text-decoration: none;
+		}
+	}
 }
 
 @media (min-width: 900px) {
