@@ -7,10 +7,7 @@ about:
         text: "CV"
         href: "/about/cv.html"
         local: true
-    repo:
-        text: "Site repo"
-        href: "http://www.github.com/djrollins/djrollins.github.io"
     oldsite:
         text: "Old site"
-        href: "/assets/oldsite/index.html"
+        href: "/oldsite"
         local: true
