@@ -77,12 +77,17 @@ header {
         width: 25%;
         border-right: 1px solid #C7C7C7;
 
+        li {
+            display: block;
+        }
+
         ul.socials li {
+            display: inline-block;
             margin: 0px;
         }
 
         .header-content {
-            margin-top: 35px;
+            margin-top: 40%;
             padding: 10px;
         }
     }
@@ -90,8 +95,6 @@ header {
 
 @media (min-width: 1050px) {
     header {
-        .header-content {
-        }
         ul.socials li {
             margin: 0px 2.5px 0px 2.5px;
         }
