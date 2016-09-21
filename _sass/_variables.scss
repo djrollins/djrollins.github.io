@@ -1,0 +1,20 @@
+@import 'https://fonts.googleapis.com/css?family=Inconsolata|Raleway:300,600';
+
+$base-font: 'Raleway', Helvetica, Arial, sans-serif;
+$code-font: 'Inconsolata', Monaco, monospace;
+
+$base-color: rgba(#333333, 0.8);
+$base-color-strong: rgba($base-color, 0.9);
+
+$base-background-color: #FFFFFF;
+
+$accent-color: #3FC6B7;
+
+$table-border-color: #EEEEEE;
+$table-background-color: #F9F9F9;
+$table-footer-background-color: rgba($accent-color, 0.03);
+
+//$code-background-color: rgba($accent-color, 0.05);
+$code-background-color: #F9F9F9;
+
+

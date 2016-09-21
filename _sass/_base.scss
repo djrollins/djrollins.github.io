@@ -1,0 +1,29 @@
+@import "variables";
+
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/*
+ * Default font size is 16px on desktops
+ * Using % prevents screwing with users default font size
+ * 16px * 1.125% = 18px
+ * 16px * 1.25% = 20px
+ */
+html {
+  font-family: $base-font;
+  font-weight: 300;
+  font-size: 112.5%;
+  line-height: 1.6;
+
+  @media (min-width: 38em) {
+      font-size: 125%;
+  }
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
