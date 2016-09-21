@@ -1,0 +1,36 @@
+@import "variables";
+
+.postlist {
+    &-post {
+        padding: 4% 2%;
+        &:hover {
+            background-color: rgba($accent-color, 0.05);
+            border-radius: 10px;
+        }
+        /* Make links look like normal text */
+        a {
+            color: $base-color;
+
+            &:hover,
+            &:focus, {
+                text-decoration: none;
+            }
+        }
+
+        &-date {
+            color: lighten($base-color, 50);
+            font-size: .8rem;
+        }
+
+        &-title {
+            margin-bottom: .25rem;
+            font-weight: 600;
+            font-size: 1.6rem;
+        }
+
+        &-description {
+            color: lighten($base-color, 30);
+            margin-bottom: .25em;
+        }
+    }
+}

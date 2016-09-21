@@ -1,0 +1,23 @@
+<div class="postlist">
+{% if site.posts.size == 0 %}
+    <h2>No posts found.</h2>
+{% else %}
+{% for post in site.posts %}
+    <div class="postlist-post"> 
+        <a href="{{ post.url | prepend: baseurl }}">
+            <div class="postlist-post-date">
+                <time>{{ post.date | date_to_string }}</time>
+            </div>
+            <div class="postlist-post-title">
+                {{ post.title }}
+            </div> 
+            {% if post.description %}
+            <div class="postlist-post-description">
+                {{ post.description }}
+            </div>
+            {% endif %}
+        </a>
+    </div>
+{% endfor %}
+{% endif %}
+</div>

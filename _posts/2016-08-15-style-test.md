@@ -86,17 +86,17 @@ Maruku
 
 Syntax highlighting via Rouge
 
-```css
-#container {
-  float: left;
-  margin: 0 -240px 0 0;
-  width: 100%;
+```cpp
+#include <iostream>
+
+int main()
+{
+    std::cout << "Hello world!" << std::endl;
 }
 ```
 
 Non Pygments code example
 
-    <div id="awesome">
-        <p>This is great isn't it?</p>
-        <p>This is a really really really really really really reall long, potentially wrapping line.</p>
-    </div>
+    fn main() {
+        println!("Hello {}", "world!");
+    }
