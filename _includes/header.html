@@ -1,0 +1,42 @@
+<header>
+    <div class="header-content">
+        <a class="home" href="{{ site.baseurl }}">
+        <div class="portrait">
+            <img src="/assets/img/portrait.jpg"/>
+        </div>
+        <div class="site-logo">
+            <h2>Daniel<em>J</em>Rollins</h2>
+        </div>
+        </a>
+        <ul class="socials">
+            {% for social in site.socials %}
+            <a class="{{ social[0] }}" href="{{ social[1].url }}" target="_blank">
+                <li>
+                    <span class="fa {{ social[1].fa }}"></span>
+                </li>
+            </a>
+            {% endfor %}
+		</ul>
+        <div class="tag-line">
+            Curious developer spelunking through C and C++, systems programming and games development.
+        </div>
+        <hr>
+        <nav>
+            <a href="#" class="nav-item">
+                <div class="nav-item">
+                    About      
+                </div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-item">
+                    Archive
+                </div>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-item">
+                    Tags
+                </div>
+            </a>
+        </nav>
+    </div>
+</header>
