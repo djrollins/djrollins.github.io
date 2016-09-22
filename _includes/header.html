@@ -1,20 +1,24 @@
 <header>
     <div class="header-content">
-        <a class="home" href="{{ site.baseurl }}">
         <div class="portrait">
-            <img src="/assets/img/portrait.jpg"/>
+            <a class="home" href="/">
+                <img src="/assets/img/portrait.jpg"/>
+            </a>
         </div>
         <div class="site-logo">
-            <h2>Daniel<em>J</em>Rollins</h2>
+                <h2>
+                    <a class="home" href="/">
+                        Daniel<em>J</em>Rollins
+                    </a>
+                </a>
         </div>
-        </a>
         <ul class="socials">
             {% for social in site.socials %}
-            <a class="{{ social[0] }}" href="{{ social[1].url }}" target="_blank">
-                <li>
+            <li>
+                <a class="{{ social[0] }}" href="{{ social[1].url }}" target="_blank">
                     <span class="fa {{ social[1].fa }}"></span>
-                </li>
-            </a>
+                </a>
+            </li>
             {% endfor %}
 		</ul>
         <div class="tag-line">
@@ -22,21 +26,21 @@
         </div>
         <hr>
         <nav>
-            <a href="#" class="nav-item">
-                <div class="nav-item">
+            <div class="nav-item">
+                <a href="/about">
                     About      
-                </div>
-            </a>
-            <a href="#" class="nav-item">
-                <div class="nav-item">
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#">
                     Archive
-                </div>
-            </a>
-            <a href="#" class="nav-item">
-                <div class="nav-item">
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#">
                     Tags
-                </div>
-            </a>
+                </a>
+            </div>
         </nav>
     </div>
 </header>

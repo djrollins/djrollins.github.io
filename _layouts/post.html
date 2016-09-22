@@ -3,7 +3,8 @@ layout: default
 ---
 <article class="post">
     <h1>{{ page.title }}</h2>
-    <time>{{ page.date | date_to_string }}</time>
+    <div class="post-date">
+        <time>{{ page.date | date_to_string }}</time>
+    </div>
     {{ content }}
-    <div tags
 </article>

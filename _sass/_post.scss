@@ -1,0 +1,10 @@
+.post {
+    h1 {
+        margin-bottom: 0;
+    }
+    
+    &-date {
+        margin-bottom: 1rem;
+        color: lighten($base-color, 50);
+    }
+}

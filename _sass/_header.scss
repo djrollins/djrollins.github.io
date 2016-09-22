@@ -17,12 +17,15 @@ header {
             margin-top: -1em;
         }
     }
-    
-    a.home:hover {
+
+    a:hover, a:focus {
         text-decoration: none;
     }
-
+    
     .site-logo {
+        a {
+            color: $base-color;
+        }
         em {
             font-style: normal;
             opacity: 0.5;
@@ -43,7 +46,6 @@ header {
 
         a {
             &:hover {
-                text-decoration: none;
                 opacity: 0.5;
             }
         }
@@ -51,16 +53,12 @@ header {
 
     nav {
         margin-bottom: 1rem;
-        a.nav-item {
-            div {
-                width: 5rem;
-                display: inline-block;
-            }
-            &:hover {
+        .nav-item {
+            width: 5rem;
+            display: inline-block;
+            div &:hover {
                 text-decoration: none;
-                div {
-                    box-shadow: 0 0 5px;
-                }
+                box-shadow: 0 1px 5px $accent-color;
             }
         }
     }
