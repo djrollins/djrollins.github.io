@@ -1,7 +1,7 @@
 title: Daniel J. Rollins | Curious Developer
 description: >
-    Personal website and blog of Daniel Rollins - A developer
-    spelunking through C and C++, systems programming and games development
+    Curious developer spelunking through C and C++,
+    systems programming and games development.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://www.djrollins.com"
 
