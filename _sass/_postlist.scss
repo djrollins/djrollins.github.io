@@ -22,10 +22,13 @@
             font-size: .8rem;
         }
 
-        &-title {
+        &-title h2 {
+            margin-top: .25rem;
             margin-bottom: .25rem;
             font-weight: 600;
             font-size: 1.6rem;
+            color: $base-color;
+            letter-spacing: 0;
         }
 
         &-description {
