@@ -36,3 +36,6 @@ socials:
         fa: "fa-envelope"
         color: "#77CAC1"
         url: "mailto:website@djrollins.com"
+
+gems:
+    - jekyll-sitemap
