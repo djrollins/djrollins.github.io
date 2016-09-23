@@ -1,9 +1,7 @@
 @import "variables";
 
 header {
-    .header-content {
-        text-align: center;
-    }
+    .header-content { text-align: center; }
 
     .portrait {
         width: 8rem;
@@ -13,19 +11,14 @@ header {
         border: 2px solid $accent-color;
         overflow: hidden;
 
-        img {
-            margin-top: -1em;
-        }
+        img { margin-top: -1em; }
     }
 
-    a:hover, a:focus {
-        text-decoration: none;
-    }
+    a:hover, a:focus { text-decoration: none; }
     
     .site-logo {
-        a {
-            color: $base-color;
-        }
+        h1 { font-size: 1.8rem; }
+        a { color: $base-color; }
         em {
             font-style: normal;
             opacity: 0.5;
