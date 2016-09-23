@@ -7,7 +7,9 @@ url: "http://www.djrollins.com"
 
 owner:
     name: Daniel J. Rollins
-    
+
+ga-tracking-id: UA-84655627-1
+
 markdown: kramdown
 
 socials:
