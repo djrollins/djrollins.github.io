@@ -3,11 +3,11 @@
 .postlist {
     &-post {
         padding: 4% 2%;
-        &:hover {
-            background-color: rgba($accent-color, 0.05);
+        &:hover,
+        &:focus {
+            background-color: rgba($accent-color, 0.1);
             border-radius: 10px;
         }
-        /* Make links look like normal text */
         a {
             color: $base-color;
 
