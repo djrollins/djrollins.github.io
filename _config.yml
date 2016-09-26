@@ -1,10 +1,18 @@
-title: The Inquisitive Programmer
-author: Daniel J. Rollins
+title: Daniel J. Rollins | The Inquisitive Programmer
+author:
+    twitter: DanielJRollins
+    name: Daniel J. Rollins
+
 description: >
     Inquisitive programmer spelunking through C and C++,
     systems programming and games development.
-url: "http://www.djrollins.com"
+url: "http://djrollins.com"
 baseurl: "" # the subpath of your site, e.g. /blog
+
+logo: assets/img/favicon.ico
+
+twitter:
+    username: DanielJRollins
 
 ga-tracking-id: UA-84655627-1
 permalink: pretty
@@ -35,3 +43,4 @@ socials:
 
 gems:
     - jekyll-sitemap
+    - jekyll-seo-tag

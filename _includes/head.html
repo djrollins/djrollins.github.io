@@ -3,12 +3,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %} | {{ site.author }}</title>
-    <meta name="description" content="{{ site.description }}">
-
     <link href="{{ site.baseurl }}/css/main.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="{{ "/fonts/font-awesome.min.css" | site.baseurl }}">
     <link rel="shortcut icon" href="{{ "/assets/img/favicon.ico" | site.baseurl }}" type="image/x-icon" />
 
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+
+    {% seo title=false %}
     {% include googleanalytics.html %}
 </head>
