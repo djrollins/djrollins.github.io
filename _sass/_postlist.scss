@@ -1,6 +1,11 @@
 @import "variables";
 
 .postlist {
+    .no-posts-title {
+        text-align: center;
+        margin-top: 2rem;
+        color: rgba($base-color, 0.15);
+    }
     &-post {
         padding: 4% 2%;
         &:hover,
