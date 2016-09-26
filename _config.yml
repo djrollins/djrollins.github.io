@@ -9,7 +9,7 @@ description: >
 url: "http://djrollins.com"
 baseurl: "" # the subpath of your site, e.g. /blog
 
-logo: assets/img/favicon.ico
+logo: /assets/img/portrait.jpg
 
 twitter:
     username: DanielJRollins
