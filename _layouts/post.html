@@ -8,3 +8,6 @@ layout: default
     </div>
     {{ content }}
 </article>
+{% if page.comments %}
+{% include disqus.html %}
+{% endif %}
