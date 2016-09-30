@@ -10,11 +10,9 @@ tags: [c, sdl2, systems-programming, windows]
 >
 >  <div style="text-align: right; margin-right: 4rem;"> -- libsdl.org</div>
 
-SDL is often billed as a way of easily making your Windows application run on different platforms, e.g. Linux, without having to jump through too many hoops.  Interestingly, on inspection of the code, it seems that the majority of hoop-jumping is required on the Windows side of things, meaning SDL could probably be better described as a way of easily porting your Linux apps to Windows.
+SDL is often billed as a way of easily making your Windows application run on different platforms, e.g. Linux, without having to jump through the many conflicting hoops that the different platform APIs require. Interestingly, on inspection of the code it seems that, at least initially, the majority of hoop-jumping is required on the Windows side of things, meaning SDL could potentially be better described as a way of easily porting your Linux apps to Windows.
 
-The method by which SDL navigates these hoops involves interesting (ab)use of the C Pre-Processor to slot itself between the C runtime and your application code. 
-
-This article aims to explain how SDL does this and why the result provides us with more utility than initially meets the eye.
+The method by which SDL navigates these hoops involves interesting (ab)use of the C Pre-Processor to slot itself between the C runtime and your application code. This article aims to explain how SDL does this and why the result provides us with more utility than initially meets the eye.
 
 Interestingly, many of the intricacies of the launch of an SDL application can be explored with the simplest of code:
 ```c
