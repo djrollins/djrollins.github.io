@@ -65,7 +65,7 @@ int main() {}
 ```
 Error	LNK2019	unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)	SDLmain	E:\src\SDLmain\SDLmain\MSVCRTD.lib(exe_main.obj)	1	
 ```
-The linker can no longer find our `main` function. A quick glance at the [SDL.h]() header we find another header file, [SDL_main.h](), that gives some insight as to whats going on.
+The linker can no longer find our `main` function. A quick glance at the [SDL.h](https://hg.libsdl.org/SDL/file/ac1c949c14b4/include/SDL.h) header we find another header file, [SDL_main.h](https://hg.libsdl.org/SDL/file/ac1c949c14b4/include/SDL_main.h), that gives some insight as to whats going on.
 ```c
 /* Line 32 */
 #ifndef SDL_MAIN_HANDLED
