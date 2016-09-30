@@ -76,7 +76,8 @@ The linker can no longer find our `main` function. A quick glance at the [SDL.h]
    If you provide your own WinMain(), you may define SDL_MAIN_HANDLED
  */
 #define SDL_MAIN_AVAILABLE
-
+```
+```c
 /* Line 102 */
 #if defined(SDL_MAIN_NEEDED) || defined(SDL_MAIN_AVAILABLE)
 #define main    SDL_main
@@ -87,9 +88,9 @@ The linker can no longer find our `main` function. A quick glance at the [SDL.h]
  */
 extern C_LINKAGE int SDL_main(int argc, char *argv[]);
 ```
-After detecting that we are compiling on Windows, the `SDL_main` header redefines the `main` symbols to `SDL_main` and defines a prototype for that function for the linker to sort out later. So as a result of including SDL.h, our `main` function has been renamed, which explains why the linker is complaining that it cannot find it.
+After detecting that we are compiling on Windows, the `SDL_main` header redefines the `main` symbol to `SDL_main` and declares a prototype for that function for the linker to sort out later. So as a result of including SDL.h, our `main` function has been renamed, which explains why the linker is complaining that it cannot find it.
 
-The comments suggest that SDL provides the entry point definition for us, so we should probably let the linker know where the SDL symbols are located. Adding `SDL2.lib` and `SDL2main.lib` as dependencies and providing the executable with `.dll`, we compile and run as expected once more. Looking again at the call stack from the point of our `main` function we can see few extra function calls have been added.
+The comments suggest that SDL provides the entry point definition for us, so we should probably let the linker know where the SDL symbols are located. Adding `SDL2.lib` and `SDL2main.lib` as dependencies and providing the executable with the `.dll`, we compile and run as expected once more. Looking again at the call stack from the point of our `main` function we can see few extra function calls have been added.
 ```
 >	SDLmain.exe!SDL_main(...) Line 3	C
  	SDLmain.exe!main_utf8() Line 126	C
@@ -100,17 +101,19 @@ The comments suggest that SDL provides the entry point definition for us, so we 
  	SDLmain.exe!mainCRTStartup() Line 17	C++
  	kernel32.dll!752d62c4()	Unknown
 ```
-The `main` and `main_utf8` show here are provided by the SDL library. We can also see our `main` function sporting its new `SDL_main` moniker. The definitions for the SDL main functions can be found in [SDL_windows_main.c](http://hg.libsdl.org/SDL/file/7fde2d881171/src/main/windows/SDL_windows_main.c).
+The `main` and `main_utf8` shown here are provided by the SDL library. We can also see our `main` function sporting its new `SDL_main` moniker. The definitions for the SDL main functions can be found in [SDL_windows_main.c](http://hg.libsdl.org/SDL/file/7fde2d881171/src/main/windows/SDL_windows_main.c).
 
 ```c
 /* Line 7 */
 #ifdef __WIN32__
-
+```
+```c
 /* Line 17 */
 #ifdef main
 #   undef main
 #endif /* main */
-
+```
+```c
 /* Line 110 */
 #if defined(_MSC_VER)
 /* The VC++ compiler needs main/wmain defined */
@@ -137,15 +140,16 @@ console_ansi_main(int argc, char *argv[])
     /* !!! FIXME: are these in the system codepage? We need to convert to UTF-8. */
     return main_utf8(argc, argv);
 }
-
+```
+```
 /* Line 198 */
 #endif /* __WIN32__ */
 ```
 
 In the above compilation unit, SDL undefs the `main` symbol it provided in the header and `console_ansi_main` is defined as `main` which provides the linker with the much needed entry point into our program. The reason for hiding this behind a 
-preprocessor define instead of naming the function `main` directly still eludes me, but the result is the same.
+preprocessor define instead of naming the function `main` directly still eludes me but, as far as I can tell, the result is the same.
 
-The `main_utf8` function calls `SDL_SetMainReady` to confirm that initialisation was successful before invoking our, now called, `SDL_main` function.
+The `main_utf8` function calls `SDL_SetMainReady` to confirm that initialisation was successful before invoking our renamed `SDL_main` function.
 
 Success! But what have we actually gained?
 
@@ -162,6 +166,8 @@ Interestingly, if we change the linker target to the 'Windows' subsystem, our pr
  	SDLmain.exe!WinMainCRTStartup() Line 17	C++
 ```
 Here the `WinMain` function, provided by SDL, grabs a handle to the command line to parse provided arguments and forwards them to our `SDL_main` function in the same manner as the previous example. What we've gained is the ability to target two different Windows subsystems using only one of the user-defined entry point functions. What's more, the entry point we do have to define is also the simpler and platform-neutral `main` signature rather than the much more complex and Windows-specific `WinMain`:
+ 
+Consider:
 ```c
 int main(int argc, char **argv);
 ```
@@ -177,13 +183,13 @@ int CALLBACK WinMain(
 
 How does this differ to Linux?
 ------------------------------
-SDL initialisation on Linux is significantly less exciting than it is on Windows. Given the only entry point supported in user-land Linux executables is the standard `int main(int argc, char **argv)`, SDL doesn't bother with any of the preprocessor magic and lets the initialisation code call our `main` function directly.
+SDL initialisation on Linux is significantly less exciting than it is on Windows. Given the only entry point supported in user-land Linux executables is the standard `int main(int argc, char **argv)`, SDL doesn't bother with any of the preprocessor magic and lets the initialisation code call our `main` function directly. This also means there is no `SDL_main` library to link to on Linux, just a single `-lSDL2` flag. Nice!
 
 That's it. A little anti-climactic, I suppose. Though it does kind of embody the Zen of programming on Linux.
 
-Wrapping up
------------
-I've only only scratched the surface of the SDL library in this post. Literally. We've not even got past the invocation of `main`! However, even with such a small amount of example code we've seen how SDL employs interesting tricks to make cross-platform development of games easier, potentially without programmer even knowing about it.
+Conclusion
+----------
+I've only only scratched the surface of the SDL library in this post. Literally. We've not even got past the invocation of `main`! However, even with such a small amount of example code we've seen how SDL employs interesting preprocessor tricks to make cross-platform development simpler for the programmer, potentially without them even knowing about it.
 
-As primarily a Linux developer, I've learnt a few of the eccentricities of the Win32 API throughout this and look forward to posting more about the differences between the two platforms and how SDL tries to abstract these concepts away to make the developer's life easier.
+As primarily a Linux programmer, I've learnt a few of the eccentricities of the Win32 API throughout this and look forward to exploring more of the differences between the two platforms in the future and how SDL tries to abstract these concepts away to make the programmer's life easier.
 
