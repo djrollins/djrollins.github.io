@@ -10,7 +10,7 @@ I'm Daniel Rollins, an inquisitive software developer and programming enthusiast
 
 Unlike many software developers, I was bitten by the programming bug later on in life. I first cut my teeth in a C programming course whilst studying for my MEng in Electronic Engineering at the wonderful University of York. Understanding the interaction between code and hardware [resonated strongly](https://xkcd.com/676) with me and from that point I was hooked. I threw myself at as many software engineering projects as my university would allow, including creating an [FPGA](https://en.wikipedia.org/wiki/Field-programmable_gate_array)-based MIDI [synthesizer](https://en.wikipedia.org/wiki/Synthesizer) in C, musician teaching tool in Java and (an attempt at) a [Finite element](https://en.wikipedia.org/wiki/Finite_element_method)-based physics engine in C++.
 
-After university, I spent few years at [iMBE]() at the University of Leeds, performing research into computational analysis vertebral fractures. I now work at [FinancialForce](www.finacialforce.com) where I help design and build middleware and messaging infrastructure for cross-product integration on the Salesforce platform using Apex and Javascript.
+After university, I spent a few years at [iMBE](http://www.imbe.leeds.ac.uk/) at the University of Leeds, performing research into computational analysis vertebral fractures. I now work at [FinancialForce](https://www.financialforce.com) where I help to design and build middleware and messaging infrastructure for cross-product integration on the Salesforce platform using Apex and Javascript.
 
 Why am I blogging?
 ------------------
@@ -22,7 +22,7 @@ What will I post about?
 -----------------------
 My job keeps me fulfilled with software engineering challenges day-to-day, however outside of the workplace I have interests in a wide range of technologies that I like to post about. I would like to keep this blog focussed on the topics that  I have a deep personal fondness of and would like to explore further, including C and C++, low-level systems programming and games development. That's not to say I won't get waylaid talking about other programming languages or technologies far outside that scope, but I feel narrow focus is best to start with.
 
-The only guarantee I can make about my posts is that I found the topic compelling enough to write about. It may not been new information or ground-breaking insight, but I hope that at least someone else will learn something new from what I write.
+The only guarantee I can make about my posts is that I found the topic compelling enough to write about. It may not be new information or ground-breaking insight, but I hope that at least someone else will learn something new from what I write.
 
 Anything else?
 --------------
