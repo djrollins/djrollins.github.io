@@ -7,7 +7,7 @@ About
 =====
 I'm Daniel Rollins, a software developer and programming enthusiast based in Leeds, UK.
 
-I am currently working at [FinancialForce](www.finacialforce.com) where I help design and build middleware for cross-product integration on the Salesforce platform using Apex and Javascript.
+I am currently working at [FinancialForce](www.financialforce.com) where I help design and build middleware for cross-product integration on the Salesforce platform using Apex and Javascript.
 
 I have a strong personal interest in systems programming languages such as C and C++ and am very passionate about Linux and Open Source software.
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "How SDL2 does its initialisation magic on Windows"
+description: "Taking a look at the tricks the SDL library uses to reduce the cross-platform development burden before our application is even executed"
 comments: true
 tags: [c, sdl2, systems-programming, windows]
 ---
@@ -10,9 +11,9 @@ tags: [c, sdl2, systems-programming, windows]
 >
 >  <div style="text-align: right; margin-right: 4rem;"> -- libsdl.org</div>
 
-SDL is often billed as a way of easily making your Windows application run on different platforms, e.g. Linux, without having to jump through the many conflicting hoops that the different platform APIs require. Interestingly, on inspection of the code it seems that, at least initially, the majority of hoop-jumping is required on the Windows side of things, meaning SDL could potentially be better described as a way of easily porting your Linux apps to Windows.
+I have often heard SDL billed as a way of easily making your Windows application run on different platforms, e.g. Linux, without having to jump through the many conflicting hoops that the different platform APIs require. To my surprise, on inspection of the code it seems that, at least initially, the majority of hoop-jumping is required on the Windows side of things, meaning SDL could potentially be better described as a way of easily porting your Linux apps to Windows.
 
-The method by which SDL navigates these hoops involves interesting (ab)use of the C Pre-Processor to slot itself between the C runtime and your application code. This article aims to explain how SDL does this and why the result provides us with more utility than initially meets the eye.
+The method by which SDL navigates these hoops involves clever (ab)use of the C Pre-Processor to slot itself between the C runtime and your application code. This article aims to explain how SDL does this and why the result provides us with more utility than initially meets the eye.
 
 Interestingly, many of the intricacies of the launch of an SDL application can be explored with the simplest of code:
 ```c
@@ -153,7 +154,7 @@ Success! But what have we actually gained?
 
 What about `WinMain`?
 ---------------------
-Interestingly, if we change the linker target to the 'Windows' subsystem, our program compiles and executes correctly without any modifications to the code. Taking a look at the call stack once again we see a very similar output to before.
+If we change the linker target to the 'Windows' subsystem, our program continues to compile and execute correctly without any modifications to the code. Taking a look at the call stack once again we see a very similar output to before.
 ```
 >	SDLmain.exe!SDL_main(...) Line 3	C
  	SDLmain.exe!main_utf8() Line 126	C
@@ -163,7 +164,7 @@ Interestingly, if we change the linker target to the 'Windows' subsystem, our pr
  	SDLmain.exe!__scrt_common_main() Line 296	C++
  	SDLmain.exe!WinMainCRTStartup() Line 17	C++
 ```
-Here the `WinMain` function, provided by SDL, grabs a handle to the command line to parse provided arguments and forwards them to our `SDL_main` function in the same manner as the previous example. What we've gained is the ability to target two different Windows subsystems using only one of the user-defined entry point functions. What's more, the entry point we do have to define is also the simpler and platform-neutral `main` signature rather than the much more complex and Windows-specific `WinMain`:
+Here we can see that SDL has also provided us with a definition for the `WinMain` function as well. What's more, SDL grabs a handle to the command line to parse the provided arguments and forward them to our `SDL_main` function in the same manner as the previous example. What we've gained is the ability to target two different Windows subsystems using only one of the user-defined entry point functions. What's more, the entry point we do have to define is also the simpler and platform-neutral `main` signature rather than the much more complex and Windows-specific `WinMain`:
  
 Consider:
 ```c
@@ -178,6 +179,7 @@ int CALLBACK WinMain(
   _In_ int       nCmdShow
 );
 ```
+I'd consider that a pretty big win for a single include statement (and appropriately linked library, of course).
 
 How does this differ to Linux?
 ------------------------------
@@ -187,7 +189,7 @@ That's it. A little anti-climactic, I suppose. Though it does kind of embody the
 
 Conclusion
 ----------
-I've only only scratched the surface of the SDL library in this post. Literally. We've not even got past the invocation of `main`! However, even with such a small amount of example code we've seen how SDL employs interesting preprocessor tricks to make cross-platform development simpler for the programmer, potentially without them even knowing about it.
+I've only scratched the surface of the SDL library in this post. Literally. We've not even got past the invocation of `main`! However, even with such a small amount of example code we've seen how SDL employs interesting preprocessor tricks to make cross-platform development simpler for the programmer, potentially without them even knowing about it.
 
 As primarily a Linux programmer, I've learnt a few of the eccentricities of the Win32 API throughout this and look forward to exploring more of the differences between the two platforms in the future and how SDL tries to abstract these concepts away to make the programmer's life easier.
 
