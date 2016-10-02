@@ -13,7 +13,9 @@ I have a strong personal interest in systems programming languages such as C and
 
 When not programming or learning, I enjoy strategy gaming, tinkering with electronics and bingeing on TV box sets with my wife.
 
-<hr>
+Read more about my history and why I am blogging in my [introductory post](/2016/09/30/hello-world/)
+
+---
 
 ## This site
 On this site you will (soon) find my CV and portfolio as well as my blog that documents the journey to satisfy my endless curiosity around the subjects of C and C++, systems programming and games development.

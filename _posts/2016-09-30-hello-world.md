@@ -16,7 +16,7 @@ Why am I blogging?
 ------------------
 As I tried to outline above, I have a rather eclectic mix of backgrounds. I put this down to being very inquisitive and exploratory when it comes to technology and computing, I spend a lot of my personal time researching things I find interesting and have found myself saddened that I don't have much of a record of the things I've learned so far. I hope to remedy this by posting about the things I've learned and topics of interest so I can refer to them later.
 
-As to why I am doing that publicly? There are a number of reasons. I enjoy discussing and teaching others about technology and programming, so what better audience than those that are searching for the topics that I also care about. I also feel I can count on that audience to make sure I understand the things I am talking about [correctly](https://xkcd.com/386). Finally I hope that this blog will help me hold myself to account and continue to broaden my knowledge of the ever-growing world of programming and technology.
+As to why I am doing that publicly? There are a number of reasons. I enjoy discussing and teaching others about technology and programming, so what better audience than those that are searching for the topics that I also care about? I also feel I can count on that audience to make sure I understand the things I am talking about [correctly](https://xkcd.com/386). Finally I hope that this blog will help me hold myself to account and continue to broaden my knowledge of the ever-growing world of programming and technology.
 
 What will I post about?
 -----------------------
@@ -26,10 +26,13 @@ The only guarantee I can make about my posts is that I found the topic compellin
 
 Anything else?
 --------------
-I'd love for this blog to be a portal for discussion so I welcome email and comments.
+I'd like to give a shout-out to John Somez at [simpleprogrammer.com](https://simpleprogrammer.com/) for the information on how to approach starting a new blog. I was a little anxious about the idea of posting publicly, but the advice in his course helped me get over that feeling and take the plunge!
+
+Finally, I'd love for this blog to be a portal for discussion so I welcome email and comments.
 
  - [daniel@djrollins.com](daniel@djrollins.com)
  - [@DanielJRollins](https://twitter.com/DanielJRollins)
+
 
 Thanks for reading!
 
