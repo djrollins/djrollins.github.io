@@ -126,7 +126,6 @@ ol {
     padding-left: 2rem;
 }
 
-/* add spacing before headers if following p, ol or ul */
 p + h1,
 p + h2,
 p + h3,
@@ -135,7 +134,13 @@ ul + h2,
 ul + h3,
 ol + h1,
 ol + h2,
-ol + h3 {
+ol + h3,
+blockquote + h1,
+blockquote + h2,
+blockquote + h3,
+div + h1,
+div + h2,
+div + h3 {
   margin-top: 1.5rem;
 }
 

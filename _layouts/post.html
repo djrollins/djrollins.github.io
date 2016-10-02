@@ -6,6 +6,15 @@ layout: default
     <div class="post-date">
         <time>{{ page.date | date_to_string }}</time>
     </div>
+    <ul class="tag-list">
+    {% for tag in page.tags %}
+            <li class="tag">
+                <a href="/tags/#{{ tag }}">
+                    <span class="tag-name">{{ tag }}</span >
+                </a>
+            </li>
+    {% endfor %}
+    </ul>
     {{ content }}
 </article>
 {% if page.comments %}

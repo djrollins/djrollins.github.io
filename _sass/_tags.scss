@@ -1,0 +1,55 @@
+@import "variables";
+
+.tag-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+
+    li {
+        display: inline-block;
+        background-color: rgba($accent-color, 0.3);
+        border-radius: 3px;
+        margin: 1px 5px;
+
+        &:hover {
+            background-color: rgba($accent-color, 0.5);
+        }
+
+        a {
+            color: $base-color;
+            &:hover {
+                text-decoration: none;
+                background-color: $accent-color;
+            }
+
+            span {
+                padding: .5px 5px;
+                float: left;
+                font-size: .75rem;
+            }
+
+            $tag-border-radius: 3px;
+            .tag-name {
+                border-top-left-radius: $tag-border-radius;
+                border-bottom-left-radius: $tag-border-radius;
+            }
+
+            .tag-count {
+                background-color: rgba($accent-color, 0.7);
+                color: white;
+                border-top-right-radius: $tag-border-radius;
+                border-bottom-right-radius: $tag-border-radius;
+            }
+        }
+    }
+}
+
+.posts-by-tag {
+    a {
+        color: $base-color;
+        &:hover {
+            text-decoration: none;
+            color: $accent-color;
+        }
+    }
+}
