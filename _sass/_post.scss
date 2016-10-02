@@ -1,3 +1,5 @@
+@import "variables";
+
 .post {
     h1 {
         margin-bottom: 0;
@@ -6,5 +8,17 @@
     &-date {
         margin-bottom: 1rem;
         color: lighten($base-color, 50);
+    }
+
+    &-nav {
+        font-size: 0.75rem;
+        margin-bottom: 2rem;
+        height: 1.5rem;
+        
+        a { color: $base-color; }
+        
+        .next {
+            float: right;
+        }
     }
 }
