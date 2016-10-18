@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How SDL2 dynamically loads windowing libraries (Part 2)"
+title: "SDL2 Internals: Windowing Subsystem (Part II)"
 description: ""
 tags: [sdl2, gamedev, linux, shared-libraries, linker]
 ---

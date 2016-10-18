@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "How SDL2 dynamically loads windowing libraries (Part 1)"
+title: "SDL2 Internals: Windowing Subsystem (Part I)"
 description: ""
-tags: [sdl2, gamedev, linux, shared-libraries, linker]
+tags: [sdl2, gamedev, graphics, c]
 ---
 
 In my previous post I wrote about how the SDL2 library uses cool preprocessor
@@ -28,18 +28,24 @@ int main()
     SDL_VideoInit(NULL);
     SDL_Window *window = SDL_CreateWindow(
          "My Window Title",
-         0, 0,          // x y coords of window
-         1600, 900);    // width and height
+         0, 0,                  // x y coords of window
+         1600, 900,             // width and height
+         SDL_WINDOW_RESIZABLE); // window flags
 }
 ```
 
-The `SDL_VideoInit` function takes a driver name for if we wanted to use a
-specific API e.g. `"x11"` for X11 on Linux or `"windows"` for Windows. The
-function loops through an array of `VideoBootstrap` `struct`s and attempts to
-load the specified driver. If the driver is `NULL` the function attempts load
-each of the drivers in the array until one of them succeeds.
+The `SDL_VideoInit` function is responsible for establishing a connection to the
+underlying platform's window manager and figuring out the pixel formats and display
+modes that are available. It can take an optional driver name to load (e.g.
+`x11`, `wayland`, `windows` etc.) or `NULL` to have SDL2 figure out the
+which windowing API to use for us. As you would expect, the `SDL_CreateWindow`
+creates and shows a window for us to interact with.
 
-The `VideoBootstrap` structure is defined in `SDL_sysvideo.h` as:
+`SDL_VideoInit`
+---------------
+
+For each of the windowing APIs that SDL2 supports, it provides an instance of a
+`VideoBootstrap` struct as defined in [SDL_sysvideo.h]():
 
 ```c
 typedef struct VideoBootStrap
@@ -51,24 +57,15 @@ typedef struct VideoBootStrap
 } VideoBootStrap;
 ```
 
-`name` is what is compared to the driver name above and `desc` is a
-user-readable description that is never really used.
+The `name` is compared with the parameter to `SDL_VideoInit` if provided, but is
+otherwise uninteresting. The function pointer `available` points to a function
+that ascertains whether the windowing library exists on the system, while
+function pointed to by `create` will do the initialisation outlined above. 
 
-The structure also contains two function pointers. These functions are
-responsible for detecting the availability of the library and the loading of the
-symbols if it exists. 
-
-The `available` function returns whether the library exists on the system, as
-you would expect. The `create` function loads the library symbols and returns an
-`SDL_VideoDevice` that that contains platform-agnostic wrappers for the native
-windowing primitives and functions. The definition of `SDL_VideoDevice` is too
-long to list but it is also defined in the `SDL_sysvideo.h` header. It basically
-contains a bunch of function pointers to platform specific code for initializing
-the library and creating and handling windows.
-
-The `VideoBootstrap` array is populated at compile time with platform specific
-instances, guarded by preprocessor `#if`s. SDL2 defines which drivers are
-available in platform-specific configuration headers.
+`SDL_VideoInit` loops through an array of `VideoBootstrap` instances, checking
+it's name if required, and attempting to create it if it is available. The
+contents of the array is determined when the library is compiled using `#if`
+pre-processor guards as shown below.
 
 ```c
 /* Available video drivers */
@@ -93,6 +90,47 @@ static VideoBootStrap *bootstrap[] = {
     NULL
 };
 ```
+
+I have omitted a number of esoteric drivers in the interest of space, but the
+full list can be seen in [SDL_video.c]().
+
+The function pointed-to by `create` returns a pointer to a `VideoDevice` struct.
+The definition of this struct is much too large to list here but it essentially
+contains wrappers around the underlying library's windowing primitives and
+pointers to functions for creating and managing them.
+
+This pointer is stored in a static variable called `_this` in [SDL_video.c]()
+and is used to delegate from the top-level SDL functions down to those which
+are specific to the underlying API.
+
+`SDL_CreateWindow`
+------------------
+
+---
+
+
+The `VideoBootstrap` structure is defined in `SDL_sysvideo.h` as:
+
+
+`name` is what is compared to the driver name above and `desc` is a
+user-readable description that is never really used.
+
+The structure also contains two function pointers. These functions are
+responsible for detecting the availability of the library and the loading of the
+symbols if it exists. 
+
+The `available` function returns whether the library exists on the system, as
+you would expect. The `create` function loads the library symbols and returns an
+`SDL_VideoDevice` that that contains platform-agnostic wrappers for the native
+windowing primitives and functions. The definition of `SDL_VideoDevice` is too
+long to list but it is also defined in the `SDL_sysvideo.h` header. It basically
+contains a bunch of function pointers to platform specific code for initializing
+the library and creating and handling windows.
+
+The `VideoBootstrap` array is populated at compile time with platform specific
+instances, guarded by preprocessor `#if`s. SDL2 defines which drivers are
+available in platform-specific configuration headers.
+
 
 I have omitted a number of esoteric drivers as there are many in the actual
 code. However you can get an idea of how this array would differ if
