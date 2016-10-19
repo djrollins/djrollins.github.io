@@ -13,7 +13,7 @@ tags: [c, sdl2, gamedev, windows]
 
 I have often heard SDL billed as a way of easily making your Windows application run on different platforms, e.g. Linux, without having to jump through the many conflicting hoops that the different platform APIs require. To my surprise, on inspection of the code it seems that, at least initially, the majority of hoop-jumping is required on the Windows side of things, meaning SDL could potentially be better described as a way of easily porting your Linux apps to Windows.
 
-The method by which SDL navigates these hoops involves clever (ab)use of the C Pre-Processor to slot itself between the C runtime and your application code. This article aims to explain how SDL does this and why the result provides us with more utility than initially meets the eye.
+The method by which SDL navigates these hoops involves clever (ab)use of the C preprocessor to slot itself between the C runtime and your application code. This article aims to explain how SDL does this and why the result provides us with more utility than initially meets the eye.
 
 Interestingly, many of the intricacies of the launch of an SDL application can be explored with the simplest of code:
 
@@ -176,7 +176,7 @@ If we change the linker target to the 'Windows' subsystem, our program continues
  	SDLmain.exe!WinMainCRTStartup() Line 17	C++
 ```
 
-Here we can see that SDL has also provided us with a definition for the `WinMain` function as well. What's more, SDL grabs a handle to the command line to parse the provided arguments and forward them to our `SDL_main` function in the same manner as the previous example. What we've gained is the ability to target two different Windows subsystems using only one of the user-defined entry point functions. What's more, the entry point we do have to define is also the simpler and platform-neutral `main` signature rather than the much more complex and Windows-specific `WinMain`:
+Here we can see that SDL has also provided us with a definition for the `WinMain` function as well. What's more, SDL grabs a handle to the command line to parse the provided arguments and forward them to our `SDL_main` function in the same manner as the previous example. What we've gained is the ability to target two different Windows subsystems using only one of the user-defined entry point functions. As a bonus, the entry point we do have to define is also the simpler and platform-neutral `main` signature rather than the much more complex and Windows-specific `WinMain`:
  
 Consider:
 
