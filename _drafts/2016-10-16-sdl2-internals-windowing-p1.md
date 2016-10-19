@@ -5,12 +5,13 @@ description: ""
 tags: [sdl2, gamedev, graphics, c]
 ---
 
-In my previous post I wrote about how the SDL2 library uses cool preprocessor
-tricks to slot itself between the C runtime and the `main` function to allow
-allow software to run on a wide variety of platforms using only a single entry
-point. The SDL2 library abstracts away many other quirks of cross-platform
-development, however I've recently been exploring how the library handles
-creation of windows across the many potential windowing APIs.
+In my [previous post]({{ post.previous.url }}) I wrote about how the SDL2
+library uses cool preprocessor tricks to slot itself between the C runtime and
+the `main` function to allow allow software to run on a wide variety of
+platforms using only a single entry point. The SDL2 library abstracts away many
+other quirks of cross-platform development, however I've recently been exploring
+how the library handles creation of windows across the many potential windowing
+APIs.  
 
 ## SDL2's Windowing API
 
@@ -19,7 +20,7 @@ APIs and in some cases across the many inter-platform windowing APIs. SDL2
 reduces this complexity down to just a few lines:
 
 ```c
-// conditionally includes all necessary headers across all supported platorms
+/* conditionally includes necessary headers across all supported platorms */
 #include <SDL2/SDL.h>
 
 int main()
@@ -35,9 +36,9 @@ int main()
 ```
 
 The `SDL_VideoInit` function is responsible for establishing a connection to the
-underlying platform's window manager and figuring out the pixel formats and display
-modes that are available. It can take an optional driver name to load (e.g.
-`x11`, `wayland`, `windows` etc.) or `NULL` to have SDL2 figure out the
+underlying platform's window manager and figuring out the pixel formats and
+display modes that are available. It can take an optional driver name to load
+(e.g.  `x11`, `wayland`, `windows` etc.) or `NULL` to have SDL2 figure out the
 which windowing API to use for us. As you would expect, the `SDL_CreateWindow`
 creates and shows a window for us to interact with.
 
@@ -45,7 +46,8 @@ creates and shows a window for us to interact with.
 ---------------
 
 For each of the windowing APIs that SDL2 supports, it provides an instance of a
-`VideoBootstrap` struct as defined in [SDL_sysvideo.h]():
+`VideoBootstrap` struct as defined in
+[SDL_sysvideo.h](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_sysvideo.h#L361):
 
 ```c
 typedef struct VideoBootStrap
@@ -58,14 +60,16 @@ typedef struct VideoBootStrap
 ```
 
 The `name` is compared with the parameter to `SDL_VideoInit` if provided, but is
-otherwise uninteresting. The function pointer `available` points to a function
+otherwise uninteresting. The `available` function pointer points to a function
 that ascertains whether the windowing library exists on the system, while
 function pointed to by `create` will do the initialisation outlined above. 
 
-`SDL_VideoInit` loops through an array of `VideoBootstrap` instances, checking
-it's name if required, and attempting to create it if it is available. The
-contents of the array is determined when the library is compiled using `#if`
-pre-processor guards as shown below.
+`SDL_VideoInit`
+[loops](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_video.c#L478)
+through an array of `VideoBootstrap` instances, checking it's name if required,
+and attempting to create it if it is available. The content of the array is
+determined when the library is compiled using `#if` pre-processor guards as
+shown below.
 
 ```c
 /* Available video drivers */
@@ -92,162 +96,111 @@ static VideoBootStrap *bootstrap[] = {
 ```
 
 I have omitted a number of esoteric drivers in the interest of space, but the
-full list can be seen in [SDL_video.c]().
+full list can be seen in
+[SDL_video.c](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_video.c#L63).
+The function pointed-to by `create` returns a pointer to a
+[`VideoDevice`](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_sysvideo.h#L145)
+struct.  The definition of this struct is much too large to list here but it
+essentially contains wrappers around the underlying library's display primitives
+and pointers to functions for creating and managing windows.
 
-The function pointed-to by `create` returns a pointer to a `VideoDevice` struct.
-The definition of this struct is much too large to list here but it essentially
-contains wrappers around the underlying library's windowing primitives and
-pointers to functions for creating and managing them.
-
-This pointer is stored in a static variable called `_this` in [SDL_video.c]()
-and is used to delegate from the top-level SDL functions down to those which
-are specific to the underlying API.
+This pointer is stored in a static variable called `_this` in
+[SDL_video.c](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_video.c#L118)
+and is used to delegate from the top-level SDL functions down to those which are
+specific to the underlying API.
 
 `SDL_CreateWindow`
 ------------------
 
----
+With the video system intialised, we can create the window with the
+`SDL_CreateWindow` function. This function takes a string as a title along with
+position and dimensions of the window. The final argument is a set of flags to
+customize the window decorations and capabilities. The function returns an
+[`SDL_Window`](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_sysvideo.h#L71)
+struct that contains platform-agnostic window data and wraps the underlying
+library's window data type behind a `void` pointer.
 
+Internally, `SDL_CreateWindow` allocates an `SDL_Window` on the heap, sets the
+platform-agnostic data and adds it to the linked-list of window instances on
+`VideoDevice`. It then passes the window into the `CreateFunction` pointer on
+the video `VideoDevice` to do the library specific work to create the window.
 
-The `VideoBootstrap` structure is defined in `SDL_sysvideo.h` as:
-
-
-`name` is what is compared to the driver name above and `desc` is a
-user-readable description that is never really used.
-
-The structure also contains two function pointers. These functions are
-responsible for detecting the availability of the library and the loading of the
-symbols if it exists. 
-
-The `available` function returns whether the library exists on the system, as
-you would expect. The `create` function loads the library symbols and returns an
-`SDL_VideoDevice` that that contains platform-agnostic wrappers for the native
-windowing primitives and functions. The definition of `SDL_VideoDevice` is too
-long to list but it is also defined in the `SDL_sysvideo.h` header. It basically
-contains a bunch of function pointers to platform specific code for initializing
-the library and creating and handling windows.
-
-The `VideoBootstrap` array is populated at compile time with platform specific
-instances, guarded by preprocessor `#if`s. SDL2 defines which drivers are
-available in platform-specific configuration headers.
-
-
-I have omitted a number of esoteric drivers as there are many in the actual
-code. However you can get an idea of how this array would differ if
-compiled on Windows compared to Linux. 
-
-Why does the SDL2 library have go through all of this rigmarole? Well in order
-for a program to be cross-platform, it needs to not only play nice with the
-libraries available to each platform but it also needs to not rely on on things
-that are not available. For completely separate platforms, e.g. Windows and
-Linux, it's fairly trivial to exclude Linux-specific code from a Windows build
-and _vice versa_, but what what about intra-platform differences and conflicts?  
-
-With regards to windowing APIs, SDL2 may be able to dynamically link to the
-Windows windowing library indiscriminately as that is the only one available on
-that platform. However, in the Linux world, the user has a number of options for
-which window manager they wish to use, for example X11, Wayland and Mir are all
-supported by SDL2.
-
-## Static Linking vs Dynamic Linking vs Dynamic Loading
-
-Before going any further it is worth briefly going over the difference between
-static linking, dynamic linking and dynamic loading.
-
-When compiling a program that relies on an external library, the resulting
-object file does not automatically contain the definitions of the functions and
-symbols directly. The role of the linker is to fill in the gaps and provide the
-definitions for us. Linking can be achieved either statically or dynamically.
-
-##### Static linking
-
-If we ask the linker to link statically, it will essentially concatenate our
-object file with a library's statically compiled object file and turn that into
-an executable binary. Our executable then contains all of the function
-definitions and symbols directly, meaning we do not have a runtime dependency on
-the library. Whilst this allows our executable to run independently, it does
-have a number of downsides.
-
-By bundling the library into our executable we have increased the memory
-footprint of our binary and any other executable using the same library will
-have to load their own version. Additionally, if we needed to use a newer
-version of the library (e.g. for a bug fix upstream) we would need to recompile
-our program and link in the new version.  
-
-##### Dynamic linking
-
-Dynamic linking solves these issues by deferring the linking until our
-executable is run. In this case it is up to the OS's dynamic linker to find the
-missing symbols at run-time from a shared library. This solves the issue of
-memory bloat as many different processes can share the same instance of the
-library, and we get any bug-fixes/updates from the library for free.
-
-The issue with this approach is that if the user does not have the dependency
-installed on their machine, our executable will fail to load, with a
-fairly ugly message about a missing shared library (or dll on Windows).
-
-##### Dynamic Loading
-
-Dynamic loading is the process of ignoring the linker all together and loading
-the library ourselves at run time. In this case we define pointers to the
-functions and symbols we want to use and populate them by calling into the
-platform shared library loading facilities (`dlopen` on Linux or `LoadLibrary`
-on Windows).
-
-This does mean a large increase in complexity in our code, as we'll see later,
-but we gain the flexibility to decided what to do if library doesn't exist on
-the users computer. In the event that the library doesn't exist we could
-fallback to different code or just present the user with a friendlier error
-message.
-
-Loading a library dynamically on Linux is a fairly simple process. As a
-contrived example, loading the `int foo(char *)` symbol from the `bar` library
-and using it could be achieved as follows:
+A synopsis of the `SDL_CreateWindow`, as defined in
+[SDL_video.c](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_video.c#L1330),
+is outlined below (comments mine):
 
 ```c
-int foo_it_up(void)
+SDL_Window *
+SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint32 flags)
 {
-    void *lib_handle;
-    int (*foo)(char *);
-    int ret;
+    SDL_Window *window;
+    
+    /* error-checking on inputs and dealing with flags omitted */
+    ...
 
-    // Open a handle the bar library
-    lib_handle = dlopen("libbar.so");
-    if (!lib_handle) {
-        // failed to load bar, report the error
-        fprintf(stderr, "%s", dlerror());
-        return 0;
+    /* magic pointer used in other functions make sure the window belongs to the
+     * VideoDevices bound to _this */
+    window->magic = &_this->window_magic;
+    window->id = _this->next_object_id++;
+    window->x = x;
+    window->y = y;
+    window->w = w;
+    window->h = h;
+
+    /* Set more relatively boring visual parameters on the the window */
+    ...
+
+    /* Add window to linked list on _this */
+    if (_this->windows) {
+        _this->windows->prev = window;
+    }
+    _this->windows = window;
+
+    /* Delegate to library-specific window creation through the _this pointer */
+    if (_this->CreateWindow && _this->CreateWindow(_this, window) < 0) {
+        SDL_DestroyWindow(window);
+        return NULL;
     }
 
-    // get the address of the foo function
-    foo = dlsym(lib_handle, "foo");
-    if (!foo) {
-        // couldn't load foo
-        fprintf(stderr, "%s", dlerror());
-        dlclose(lib_handle);
-        return 0;
-    }
+    /* Set title and finialize window creation before returning */
+    ...
 
-    ret = foo("doot");
-
-    // close the the library
-    dlclose(lib_handle);
-
-    return ret;
+    return window
 }
 ```
 
-##### What does SDL2 do?
+Assuming X11 was the lucky library to be bootstrapped, the `CreateWindow`
+function pointer points to `X11_CreateWindow` inside
+[x11/SDL_x11window.c](https://github.com/SDL-mirror/SDL/blob/master/src/video/x11/SDL_x11window.c#L360)
+which has all of the X11-specific symbols to create an X11 Window.
 
-Given vast number of dependencies SDL wraps, both static and dynamic linking are
-problematic. Having SDL2 statically link to X11, Wayland and Mir would increase
-the problems outlined about three-fold - and that's just the windowing
-subsystem on a single platform! Likewise, SDL2 cannot expect the user to install
-all three window management libraries, just to get SDL2 to load without error,
-if they're only using one of them.
+The X11 window data is stored in a
+[`SDL_WindowData`](https://github.com/SDL-mirror/SDL/blob/master/src/video/x11/SDL_x11window.h#L43)
+struct that is defined for that particular library and is referenced by the
+owning `SDL_Window` behind a `void`
+[pointer](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_sysvideo.h#L109).
+This pointer is cast back to the `SDL_WindowData` struct inside the X11 specific
+window handling functions. The specifics of creating a window using the X11 API
+is out of the scope of this post (that's not to say I won't post about it in the
+future), so that's where this part of the series ends.
 
-For these reasons SDL has to resort to dynamically loading one of the libraries
-at run time. These libraries have a complex APIs with a lot of symbols and
-functions that need to be loaded, meaning the process can be quiet repetitive
-and cumbersome. This is where the aforementioned preprocessor tricks come in.
+Conclusion
+----------
+
+I've covered the basic high-level interface of the SDL2 window creation API and
+how it initialises the video subsystem and delegates to platform-specific
+windowing libraries through function pointers on the `VideoDevice` structure
+that wraps the the underlying API.
+
+For me it was interesting to see a very object-orientated approach used
+internally within the SDL2 library. The of use data types to represent the
+connection the video device/display server and windows, and encapsulating the
+implementation details for the library-specific functions behind function
+pointers gave me great insight on how I could approach writing my future
+projects in C.  
+
+You'll notice that I glossed over how SDL2 detects whether the library exists on
+the system and how it gets access to the library symbols in the platform
+specific code. This is a large topic that deserves its own post so I will cover
+that in the nex installment.
 
