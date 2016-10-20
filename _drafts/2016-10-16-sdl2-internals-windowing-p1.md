@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "SDL2 Internals: Windowing Subsystem (Part I)"
-description: ""
+description: "A high level overview of the SDL Video subsystem and window
+creation API, and how it delegates to platform specific library code."
 tags: [sdl2, gamedev, graphics, c]
 ---
 
@@ -16,8 +17,8 @@ APIs.
 ## SDL2's Windowing API
 
 The process to create a window varies wildly across the many different platform
-APIs and in some cases across the many inter-platform windowing APIs. SDL2
-reduces this complexity down to just a few lines:
+and in some cases across the many inter-platform windowing APIs. SDL2 reduces
+this complexity down to just a few lines: 
 
 ```c
 /* conditionally includes necessary headers across all supported platorms */
@@ -61,15 +62,19 @@ typedef struct VideoBootStrap
 
 The `name` is compared with the parameter to `SDL_VideoInit` if provided, but is
 otherwise uninteresting. The `available` function pointer points to a function
-that ascertains whether the windowing library exists on the system, while
+that ascertains whether the windowing library exists on the system, while the
 function pointed to by `create` will do the initialisation outlined above. 
 
 `SDL_VideoInit`
 [loops](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_video.c#L478)
 through an array of `VideoBootstrap` instances, checking it's name if required,
 and attempting to create it if it is available. The content of the array is
-determined when the library is compiled using `#if` pre-processor guards as
-shown below.
+determined for each platform when the library is compiled using `#if`
+pre-processor guards as shown below. For exmaple, Win32 platforms will likely
+just contain the Windows bootstrap, where as if the library was compiled for
+Linux it would include the classic [X11](https://www.x.org/wiki/) library, the
+more modern [Wayland](https://wayland.freedesktop.org/) and, in some cases,
+Ubuntu's [Mir](https://wiki.ubuntu.com/Mir).
 
 ```c
 /* Available video drivers */
@@ -118,7 +123,7 @@ position and dimensions of the window. The final argument is a set of flags to
 customize the window decorations and capabilities. The function returns an
 [`SDL_Window`](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_sysvideo.h#L71)
 struct that contains platform-agnostic window data and wraps the underlying
-library's window data type behind a `void` pointer.
+library's window data behind a `void` pointer.
 
 Internally, `SDL_CreateWindow` allocates an `SDL_Window` on the heap, sets the
 platform-agnostic data and adds it to the linked-list of window instances on
@@ -178,11 +183,12 @@ The X11 window data is stored in a
 [`SDL_WindowData`](https://github.com/SDL-mirror/SDL/blob/master/src/video/x11/SDL_x11window.h#L43)
 struct that is defined for that particular library and is referenced by the
 owning `SDL_Window` behind a `void`
-[pointer](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_sysvideo.h#L109).
-This pointer is cast back to the `SDL_WindowData` struct inside the X11 specific
-window handling functions. The specifics of creating a window using the X11 API
-is out of the scope of this post (that's not to say I won't post about it in the
-future), so that's where this part of the series ends.
+[pointer](https://github.com/SDL-mirror/SDL/blob/master/src/video/SDL_sysvideo.h#L109)
+as outlined above.  This pointer is cast back to the `SDL_WindowData` struct
+inside the X11 specific window handling functions to get at the data required to
+interact with the underlying API.  The specifics of creating a window using the
+X11 API is out of the scope of this post (that's not to say I won't post about
+it in the future), so that's where this part of the series ends.
 
 Conclusion
 ----------
@@ -202,5 +208,5 @@ projects in C.
 You'll notice that I glossed over how SDL2 detects whether the library exists on
 the system and how it gets access to the library symbols in the platform
 specific code. This is a large topic that deserves its own post so I will cover
-that in the nex installment.
+that in the next installment.
 
