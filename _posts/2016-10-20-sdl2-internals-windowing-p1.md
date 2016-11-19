@@ -4,6 +4,7 @@ title: "SDL2 Internals: Windowing Subsystem (Part I)"
 description: "A high level overview of the SDL Video subsystem and window
 creation API, and how it delegates to platform specific library code."
 tags: [sdl2, gamedev, graphics, c]
+comments: true
 ---
 
 In my [previous post]({{ post.previous.url }}) I wrote about how the SDL2

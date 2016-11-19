@@ -3,6 +3,7 @@ layout: post
 title: "Pointer Aliasing: Subtle changes, Large performance implications"
 description: "How a minor refactor landed me with a 35% performance hit."
 tags: [c, assembly, pointers, performance]
+comments: true
 ---
 
 I am currently in the process of writing a software renderer in C for a game
