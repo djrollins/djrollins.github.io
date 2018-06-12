@@ -3,9 +3,6 @@ layout: default
 ---
 <article class="post">
     <h1>{{ page.title }}</h2>
-    <div class="post-date">
-        <time>{{ page.date | date_to_string }}</time>
-    </div>
     <ul class="tag-list">
     {% for tag in page.tags %}
             <li class="tag">
