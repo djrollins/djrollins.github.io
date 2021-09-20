@@ -41,6 +41,6 @@ socials:
         color: "#77CAC1"
         url: "mailto:website@djrollins.com"
 
-gems:
+plugins:
     - jekyll-sitemap
     - jekyll-seo-tag
