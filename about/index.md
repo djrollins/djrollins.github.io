@@ -5,15 +5,15 @@ title: About
 
 About
 =====
-I'm Daniel Rollins, a software developer and programming enthusiast based in Leeds, UK.
+I'm Daniel Rollins, a software consultant and programming enthusiast based in Leeds, UK.
 
-I am currently working at [FinancialForce](https://www.financialforce.com) where I help design and build middleware for cross-product integration on the Salesforce platform using Apex and Javascript.
+I am currently as Senior Consultant at [Infinity Works](https://www.infinityworks.com) where we help companies succeed in their digital transformation journey.
 
-I have a strong personal interest in systems programming languages such as C and C++ and am very passionate about Linux and Open Source software.
+My work requires me to be a full-stack, polyglot software engineer - building and maintain large-scale systems across many technology stacks, as well as providing training for client staff.
 
-When not programming or learning, I enjoy strategy gaming, tinkering with electronics and bingeing on TV box sets with my wife.
+I have a strong personal interest in systems programming languages such as C, C++ and Rust, and am very passionate about Linux and Open Source software.
 
-Read more about my history and why I am blogging in my [introductory post](/2016/09/30/hello-world/)
+When not programming or learning, I enjoy strategy gaming, tinkering with electronics and bingeing on TV box sets with my wife, Hazel.
 
 ---
 
